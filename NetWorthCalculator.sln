@@ -1,0 +1,67 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "NetWorthCalculator.Web.ReactJs", "src\NetWorthCalculator.Web.ReactJs\NetWorthCalculator.Web.ReactJs.njsproj", "{5DC98844-7B45-4631-9BB0-49F22BCB8422}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetWorthCalculator.Web.Service", "src\NetWorthCalculator.Web.Service\NetWorthCalculator.Web.Service.csproj", "{0B1AC55F-2433-4CA8-98B8-51881A187089}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9791B40A-2FA0-411C-B6DB-2820F400E4C8} = {9791B40A-2FA0-411C-B6DB-2820F400E4C8}
+		{A271E64A-3277-48A9-A5A4-03A80772805A} = {A271E64A-3277-48A9-A5A4-03A80772805A}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetWorthCalculator.Entities", "src\NetWorthCalculator.Entities\NetWorthCalculator.Entities.csproj", "{A271E64A-3277-48A9-A5A4-03A80772805A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetWorthCalculator.Core", "src\NetWorthCalculator.Core\NetWorthCalculator.Core.csproj", "{9791B40A-2FA0-411C-B6DB-2820F400E4C8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A271E64A-3277-48A9-A5A4-03A80772805A} = {A271E64A-3277-48A9-A5A4-03A80772805A}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetWorthCalculator.Tests", "test\NetWorthCalculator.Tests\NetWorthCalculator.Tests.csproj", "{F0A1A466-AC36-43DA-9AD7-0D3551305994}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3C70D7B2-2755-469D-9A19-A02EF1F1A904}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{C3D3F3D4-DF4B-4ADB-B8BD-DB251BDBF941}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5DC98844-7B45-4631-9BB0-49F22BCB8422}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DC98844-7B45-4631-9BB0-49F22BCB8422}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DC98844-7B45-4631-9BB0-49F22BCB8422}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DC98844-7B45-4631-9BB0-49F22BCB8422}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B1AC55F-2433-4CA8-98B8-51881A187089}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B1AC55F-2433-4CA8-98B8-51881A187089}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B1AC55F-2433-4CA8-98B8-51881A187089}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B1AC55F-2433-4CA8-98B8-51881A187089}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A271E64A-3277-48A9-A5A4-03A80772805A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A271E64A-3277-48A9-A5A4-03A80772805A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A271E64A-3277-48A9-A5A4-03A80772805A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A271E64A-3277-48A9-A5A4-03A80772805A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9791B40A-2FA0-411C-B6DB-2820F400E4C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9791B40A-2FA0-411C-B6DB-2820F400E4C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9791B40A-2FA0-411C-B6DB-2820F400E4C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9791B40A-2FA0-411C-B6DB-2820F400E4C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0A1A466-AC36-43DA-9AD7-0D3551305994}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0A1A466-AC36-43DA-9AD7-0D3551305994}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0A1A466-AC36-43DA-9AD7-0D3551305994}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0A1A466-AC36-43DA-9AD7-0D3551305994}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5DC98844-7B45-4631-9BB0-49F22BCB8422} = {3C70D7B2-2755-469D-9A19-A02EF1F1A904}
+		{0B1AC55F-2433-4CA8-98B8-51881A187089} = {3C70D7B2-2755-469D-9A19-A02EF1F1A904}
+		{A271E64A-3277-48A9-A5A4-03A80772805A} = {3C70D7B2-2755-469D-9A19-A02EF1F1A904}
+		{9791B40A-2FA0-411C-B6DB-2820F400E4C8} = {3C70D7B2-2755-469D-9A19-A02EF1F1A904}
+		{F0A1A466-AC36-43DA-9AD7-0D3551305994} = {C3D3F3D4-DF4B-4ADB-B8BD-DB251BDBF941}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1C88CA13-B31B-4C68-9BDA-07A10B86FCF4}
+	EndGlobalSection
+EndGlobal
