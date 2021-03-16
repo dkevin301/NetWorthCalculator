@@ -1,14 +1,20 @@
+import './index.css';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
+import InitializeStores, { StoresContext } from "./Stores/StoreInitializer";
 import reportWebVitals from './reportWebVitals';
 
+const stores = new InitializeStores();
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+	<React.StrictMode>
+		<StoresContext.Provider value={{ ...stores }}>
+			<App />
+		</StoresContext.Provider>
+	</React.StrictMode>,
+	document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,0 +1,8 @@
+.group-list {
+	margin-bottom: 2em;
+}
+
+.group-list .group-list-footer {
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+}
