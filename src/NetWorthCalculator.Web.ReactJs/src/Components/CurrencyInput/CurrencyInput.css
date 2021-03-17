@@ -1,0 +1,12 @@
+.currency-input .ant-input-number {
+	width: 100%;
+}
+
+.currency-input .ant-input-number input {
+	text-align: right;
+}
+
+/* Hide antd's number spinner */
+.currency-input .ant-input-number .ant-input-number-handler-wrap {
+	display: none;
+}

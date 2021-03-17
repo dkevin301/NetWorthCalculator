@@ -1,13 +1,14 @@
 import "./index.css";
 
 import React from "react";
-import { Col, Input, Row, Select, Spin } from "antd";
+import { Col, Row, Select, Spin } from "antd";
 import { observer } from "mobx-react";
 import { useStores } from "../../Stores/StoreInitializer";
 import BalanceSheet from "../../Models/BalanceSheet/BalanceSheet";
 import AssetSection from "../../Components/Section/AssetSection";
 import LiabilitySection from "../../Components/Section/LiabilitySection";
 import { Currency } from "../../Models/Currency/Currency";
+import CurrencyInput from "../../Components/CurrencyInput/CurrencyInput";
 
 const NetWorthCalculator: React.FC = () => {
 
@@ -37,7 +38,7 @@ const NetWorthCalculator: React.FC = () => {
 	return (
 		<div className="net-worth-calculator">
 			<h1>Tracking Your Net Worth</h1>
-			<Row justify="end" gutter={5}>
+			<Row justify="end" align="middle" gutter={10}>
 				<Col>
 					<b>Select Currency:</b>
 				</Col>
@@ -59,12 +60,10 @@ const NetWorthCalculator: React.FC = () => {
 					<b>Net Worth</b>
 				</Col>
 				<Col span={6}>
-					<Input 
-						type="number" 
-						prefix={currentBalanceSheet.getCurrencySymbol}
+					<CurrencyInput 
+						currencySymbol={currentBalanceSheet.getCurrencySymbol} 
 						defaultValue={currentBalanceSheet.netWorth}
-						bordered={false}
-						readOnly
+						disabled
 					/>
 				</Col>
 			</Row>

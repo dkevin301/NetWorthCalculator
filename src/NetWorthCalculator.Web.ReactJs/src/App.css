@@ -1,11 +1,3 @@
 .app {
 	min-height: 100vh;
 }
-
-.ant-row {
-	height: 2.25em;
-}
-
-.ant-input {
-	direction: rtl;
-}

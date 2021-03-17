@@ -5,11 +5,11 @@ export enum Currency {
 	EUR,
 	JPY,
 	GBP,
-	CHF,
+	AUD,
 	CNH,
-	SEK,
+	SEK, // Swedish Krona
 	NZD,
-	ZAR,
+	ZAR, // South African Rand
 }
 
 export enum CurrencySymbol {
@@ -18,14 +18,14 @@ export enum CurrencySymbol {
 	EUR = "€",
 	JPY = "¥",
 	GBP = "£",
-	CHF = "₣",
+	AUD = "$",
 	CNH = "¥",
 	SEK = "kr",
 	NZD = "$",
 	ZAR = "R",
 }
 
-export function CurrencyToSymbol(currency: Currency): string | null {
+export function CurrencyToSymbol(currency: Currency): string {
 	switch(currency) {
 		case Currency.CAD:
 			return CurrencySymbol.CAD;
@@ -37,8 +37,8 @@ export function CurrencyToSymbol(currency: Currency): string | null {
 			return CurrencySymbol.JPY;
 		case Currency.GBP:
 			return CurrencySymbol.GBP;
-		case Currency.CHF:
-			return CurrencySymbol.CHF;
+		case Currency.AUD:
+			return CurrencySymbol.AUD;
 		case Currency.CNH:
 			return CurrencySymbol.CNH;
 		case Currency.SEK:
@@ -48,6 +48,6 @@ export function CurrencyToSymbol(currency: Currency): string | null {
 		case Currency.ZAR:
 			return CurrencySymbol.ZAR;
 		default:
-			return null;
+			return "N/A";
 	}
 }

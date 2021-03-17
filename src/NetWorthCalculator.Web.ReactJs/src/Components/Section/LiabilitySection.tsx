@@ -1,13 +1,14 @@
 import "./Section.css";
 
 import React from "react";
-import { Row, Col, Input } from "antd";
+import { Row, Col } from "antd";
 import { observer } from "mobx-react";
 
 import LiabilityLineItemGroup from "../LineItemGroup/LiabilityLineItemGroup";
 import { LiabilityGroup } from "../../Models/Liability/LiabilityGroup";
 import { PaymentInterval } from "../../Models/Liability/PaymentInterval";
 import BalanceSheet from "../../Models/BalanceSheet/BalanceSheet";
+import CurrencyInput from "../CurrencyInput/CurrencyInput";
 
 interface ILiabilitySectionProps {
 	balanceSheet: BalanceSheet;
@@ -38,7 +39,11 @@ const LiabilitySection: React.FC<ILiabilitySectionProps> = (props: ILiabilitySec
 					<b>Total Liabilities</b>
 				</Col>
 				<Col span={6}>
-					<Input type="number" prefix={balanceSheet.getCurrencySymbol} defaultValue={balanceSheet.totalLiabilities} bordered={false} readOnly />
+					<CurrencyInput 
+						currencySymbol={balanceSheet.getCurrencySymbol} 
+						defaultValue={balanceSheet.totalLiabilities}
+						disabled
+					/>
 				</Col>
 			</Row>
 		</div>

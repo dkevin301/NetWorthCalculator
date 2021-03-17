@@ -1,9 +1,10 @@
 import React from "react";
-import { Row, Col, Input } from "antd";
+import { Row, Col } from "antd";
 import { observer } from "mobx-react";
 
 import Asset from "../../Models/Asset/Asset";
 import { useStores } from "../../Stores/StoreInitializer";
+import CurrencyInput from "../CurrencyInput/CurrencyInput";
 
 interface IAssetLineItemProps {
 	model: Asset;
@@ -14,8 +15,8 @@ const AssetLineItem: React.FC<IAssetLineItemProps> = (props: IAssetLineItemProps
 
 	const { balanceSheetStore } = useStores();
 
-	const handleOnChange = (e: any) => {
-		balanceSheetStore.updateAssetAmount(e.target.value, model.id);
+	const handleOnChange = (newAmount: number) => {
+		balanceSheetStore.updateAssetAmount(newAmount, model.id);
 	}
 
 	return (
@@ -23,12 +24,10 @@ const AssetLineItem: React.FC<IAssetLineItemProps> = (props: IAssetLineItemProps
 			<Col span={18}>
 				{model.description}
 			</Col>
-			<Col className="amount-col" span={6}>
-				<Input 
-					type="number" 
-					prefix={balanceSheetStore.balanceSheet.getCurrencySymbol} 
+			<Col  span={6}>
+				<CurrencyInput 
+					currencySymbol={balanceSheetStore.balanceSheet.getCurrencySymbol} 
 					defaultValue={model.amount} 
-					bordered={false} 
 					onChange={handleOnChange} 
 				/>
 			</Col>

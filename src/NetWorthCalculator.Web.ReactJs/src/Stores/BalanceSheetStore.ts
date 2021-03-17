@@ -35,14 +35,26 @@ export default class BalanceSheetStore {
 		console.log(`Serialize and call service with ${id} and ${newCurrency}`);
 	}
 
-	@action updateAssetAmount(assetId: number, amount: number) {
+	@action updateAssetAmount(amount: number, assetId: number) {
 		// TODO
 		console.log(`Serialize and call service with ${assetId} ${amount}`);
+
+		// Mimic call to backend
+		// Note to self: mobx CANNOT pickup changes on mutable element in a collection. Array must be modified as a whole.
+		let indexOfLocation = this.balanceSheet.assets.map(l => l.id).indexOf(assetId);
+		let arrayCopy: Asset[] = Object.assign([], this.balanceSheet.assets);
+		arrayCopy[indexOfLocation].amount = amount;
 	}
 
-	@action updateLiabilityAmount(liabilityId: number, amount: number) {
+	@action updateLiabilityAmount(amount: number, liabilityId: number) {
 		// TODO
 		console.log(`Serialize and call service with ${liabilityId} ${amount}`);
+
+		// Mimic call to backend
+		// Note to self: mobx CANNOT pickup changes on mutable element in a collection. Array must be modified as a whole.
+		let indexOfLocation = this.balanceSheet.assets.map(l => l.id).indexOf(liabilityId);
+		let arrayCopy: Liability[] = Object.assign([], this.balanceSheet.liabilities);
+		arrayCopy[indexOfLocation].amount = amount;
 	}
 
 	@action update(json: BalanceSheetDto) {

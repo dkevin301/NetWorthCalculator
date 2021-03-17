@@ -6,7 +6,7 @@ import Asset from "../Asset/Asset";
 import { AssetGroup } from "../Asset/AssetGroup";
 import Liability from "../Liability/Liability";
 import { LiabilityGroup } from "../Liability/LiabilityGroup";
-import { sortBy } from "../../Utils/Utils";
+import { SortBy } from "../../Utils/Utils";
 import { Currency, CurrencyToSymbol } from "../Currency/Currency";
 import BalanceSheetDto from "../../Services/BalanceSheet/Dto/BalanceSheetDto";
 import { serializable, update } from "serializr";
@@ -34,14 +34,14 @@ export default class BalanceSheet {
 	}
 
 	getAssetsByGroup = computedFn((group: AssetGroup): Asset[] => {
-		return this.assets.filter((asset: Asset) => asset.group === group).sort(sortBy("order"));
+		return this.assets.filter((asset: Asset) => asset.group === group).sort(SortBy("order"));
 	});
 
 	getLiabilitiesByGroup = computedFn((group: LiabilityGroup): Liability[] => {
-		return this.liabilities.filter((liability: Liability) => liability.group === group).sort(sortBy("order"));
+		return this.liabilities.filter((liability: Liability) => liability.group === group).sort(SortBy("order"));
 	});
 
-	@computed get getCurrencySymbol(): string | null {
+	@computed get getCurrencySymbol(): string {
 		return CurrencyToSymbol(this.currency);
 	}
 

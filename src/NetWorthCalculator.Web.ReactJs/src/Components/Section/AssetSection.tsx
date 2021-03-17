@@ -1,12 +1,13 @@
 import "./Section.css";
 
 import React from "react";
-import { Row, Col, Input } from "antd";
+import { Row, Col } from "antd";
 
 import AssetLineItemGroup from "../LineItemGroup/AssetLineItemGroup";
 import { AssetGroup } from "../../Models/Asset/AssetGroup";
 import BalanceSheet from "../../Models/BalanceSheet/BalanceSheet";
 import { observer } from "mobx-react";
+import CurrencyInput from "../CurrencyInput/CurrencyInput";
 
 interface IAssetSectionProps {
 	balanceSheet: BalanceSheet;
@@ -35,7 +36,11 @@ const AssetSection: React.FC<IAssetSectionProps> = (props: IAssetSectionProps) =
 					<b>Total Assets</b>
 				</Col>
 				<Col span={6}>
-					<Input type="number" prefix={balanceSheet.getCurrencySymbol} defaultValue={balanceSheet.totalAssets} bordered={false} readOnly />
+					<CurrencyInput 
+						currencySymbol={balanceSheet.getCurrencySymbol} 
+						defaultValue={balanceSheet.totalAssets}
+						disabled
+					/>
 				</Col>
 			</Row>
 		</div>
