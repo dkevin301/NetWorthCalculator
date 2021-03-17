@@ -15,6 +15,8 @@ export default class BalanceSheetStore {
 	// Could be a collection if serving multiple users, but for the purposes of this application it can just be a single model
 	@observable balanceSheet!: BalanceSheet;
 
+	@observable isLoading!: boolean;
+
 	rootStore: RootStore;
 
 	balanceSheetService: BalanceSheetService;
@@ -28,33 +30,45 @@ export default class BalanceSheetStore {
 
 	@action updateCurrency(id: number, newCurrency: Currency) {
 		// TODO
-		const mock = new BalanceSheetDto();
-		mock.currency = newCurrency;
-		this.update(mock);
-
+		this.isLoading = true;
 		console.log(`Serialize and call service with ${id} and ${newCurrency}`);
+
+		setTimeout(() => {
+			const mock = new BalanceSheetDto();
+			mock.currency = newCurrency;
+			this.update(mock);
+			this.isLoading = false;
+		}, 1000)
 	}
 
 	@action updateAssetAmount(amount: number, assetId: number) {
 		// TODO
+		this.isLoading = true;
 		console.log(`Serialize and call service with ${assetId} ${amount}`);
 
 		// Mimic call to backend
 		// Note to self: mobx CANNOT pickup changes on mutable element in a collection. Array must be modified as a whole.
-		let indexOfLocation = this.balanceSheet.assets.map(l => l.id).indexOf(assetId);
-		let arrayCopy: Asset[] = Object.assign([], this.balanceSheet.assets);
-		arrayCopy[indexOfLocation].amount = amount;
+		setTimeout(() => {
+			let indexOfLocation = this.balanceSheet.assets.map(l => l.id).indexOf(assetId);
+			let arrayCopy: Asset[] = Object.assign([], this.balanceSheet.assets);
+			arrayCopy[indexOfLocation].amount = amount;
+			this.isLoading = false;
+		}, 1000)
 	}
 
 	@action updateLiabilityAmount(amount: number, liabilityId: number) {
 		// TODO
+		this.isLoading = true;
 		console.log(`Serialize and call service with ${liabilityId} ${amount}`);
 
 		// Mimic call to backend
 		// Note to self: mobx CANNOT pickup changes on mutable element in a collection. Array must be modified as a whole.
-		let indexOfLocation = this.balanceSheet.assets.map(l => l.id).indexOf(liabilityId);
-		let arrayCopy: Liability[] = Object.assign([], this.balanceSheet.liabilities);
-		arrayCopy[indexOfLocation].amount = amount;
+		setTimeout(() => {
+			let indexOfLocation = this.balanceSheet.assets.map(l => l.id).indexOf(liabilityId);
+			let arrayCopy: Liability[] = Object.assign([], this.balanceSheet.liabilities);
+			arrayCopy[indexOfLocation].amount = amount;
+			this.isLoading = false;
+		}, 1000)
 	}
 
 	@action update(json: BalanceSheetDto) {

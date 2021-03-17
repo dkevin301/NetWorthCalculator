@@ -63,7 +63,7 @@ const NetWorthCalculator: React.FC = () => {
 					<CurrencyInput 
 						currencySymbol={currentBalanceSheet.getCurrencySymbol} 
 						defaultValue={currentBalanceSheet.netWorth}
-						disabled
+						readonly
 					/>
 				</Col>
 			</Row>

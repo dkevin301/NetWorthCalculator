@@ -39,7 +39,7 @@ const AssetSection: React.FC<IAssetSectionProps> = (props: IAssetSectionProps) =
 					<CurrencyInput 
 						currencySymbol={balanceSheet.getCurrencySymbol} 
 						defaultValue={balanceSheet.totalAssets}
-						disabled
+						readonly
 					/>
 				</Col>
 			</Row>

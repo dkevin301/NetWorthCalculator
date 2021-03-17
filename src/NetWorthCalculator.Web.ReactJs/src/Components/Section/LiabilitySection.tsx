@@ -42,7 +42,7 @@ const LiabilitySection: React.FC<ILiabilitySectionProps> = (props: ILiabilitySec
 					<CurrencyInput 
 						currencySymbol={balanceSheet.getCurrencySymbol} 
 						defaultValue={balanceSheet.totalLiabilities}
-						disabled
+						readonly
 					/>
 				</Col>
 			</Row>

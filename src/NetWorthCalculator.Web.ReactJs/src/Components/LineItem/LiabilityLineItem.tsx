@@ -29,7 +29,7 @@ const LiabilityLineItem: React.FC<ILiabilityLineItemProps> = (props: ILiabilityL
 					currencySymbol={balanceSheetStore.balanceSheet.getCurrencySymbol} 
 					defaultValue={model.intervalAmount} 
 					onChange={handleOnChange}
-					disabled
+					readonly
 				/>
 			</Col>
 			<Col className="amount-col" span={6}>
@@ -37,6 +37,7 @@ const LiabilityLineItem: React.FC<ILiabilityLineItemProps> = (props: ILiabilityL
 					currencySymbol={balanceSheetStore.balanceSheet.getCurrencySymbol} 
 					defaultValue={model.amount} 
 					onChange={handleOnChange} 
+					isLoading={balanceSheetStore.isLoading}
 				/>
 			</Col>
 		</Row>

@@ -28,7 +28,8 @@ const AssetLineItem: React.FC<IAssetLineItemProps> = (props: IAssetLineItemProps
 				<CurrencyInput 
 					currencySymbol={balanceSheetStore.balanceSheet.getCurrencySymbol} 
 					defaultValue={model.amount} 
-					onChange={handleOnChange} 
+					onChange={handleOnChange}
+					isLoading={balanceSheetStore.isLoading}
 				/>
 			</Col>
 		</Row>
