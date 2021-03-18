@@ -6,7 +6,7 @@ export enum Currency {
 	JPY,
 	GBP,
 	AUD,
-	CNH,
+	CNY,
 	SEK, // Swedish Krona
 	NZD,
 	ZAR, // South African Rand
@@ -19,7 +19,7 @@ export enum CurrencySymbol {
 	JPY = "¥",
 	GBP = "£",
 	AUD = "$",
-	CNH = "¥",
+	CNY = "¥",
 	SEK = "kr",
 	NZD = "$",
 	ZAR = "R",
@@ -39,8 +39,8 @@ export function CurrencyToSymbol(currency: Currency): string {
 			return CurrencySymbol.GBP;
 		case Currency.AUD:
 			return CurrencySymbol.AUD;
-		case Currency.CNH:
-			return CurrencySymbol.CNH;
+		case Currency.CNY:
+			return CurrencySymbol.CNY;
 		case Currency.SEK:
 			return CurrencySymbol.SEK;
 		case Currency.NZD:

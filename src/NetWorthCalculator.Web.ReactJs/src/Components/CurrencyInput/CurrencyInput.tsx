@@ -1,12 +1,24 @@
 import "./CurrencyInput.css";
 
 import React from "react";
-import { InputNumber, Col, Row, Tooltip } from "antd";
-import { observer } from "mobx-react";
 import _ from "lodash";
+import { Row, Col } from "antd";
+import MaskedInput from "react-text-mask";
+import createNumberMask from 'text-mask-addons/dist/createNumberMask'
+import { observer } from "mobx-react";
 
-import { MAX_CURRENCY_AMOUNT } from "../../Utils/Consts";
-import { IsValidAmount } from "../../Utils/Utils";
+const defaultMaskOptions = {
+  prefix: '',
+  suffix: '',
+  includeThousandsSeparator: true,
+  thousandsSeparatorSymbol: ',',
+  allowDecimal: true,
+  decimalSymbol: '.',
+  decimalLimit: 2, // how many digits allowed after the decimal
+  integerLimit: 12, // limit length of integer numbers
+  allowNegative: false,
+  allowLeadingZeroes: false,
+}
 
 interface ICurrencyInputProps {
 	currencySymbol: string;
@@ -19,47 +31,15 @@ interface ICurrencyInputProps {
 const CurrencyInput: React.FC<ICurrencyInputProps> = (props: ICurrencyInputProps) => {
 	const { currencySymbol, defaultValue, readonly, isLoading, onChange } = props;
 
-	const [showValidation, setShowValidation] = React.useState<boolean>(false);
-
-	// This will be the actual value behind the scenes.
-	const currencyFormatter = (value?: number): string => {
-		
-		if (value != null && value > MAX_CURRENCY_AMOUNT) {
-			setShowValidation(true);
-			return value.toString();
-		}
-
-		setShowValidation(false);
-
-		if (value == null) {
-			return "0";
-		}
-
-		return new Intl.NumberFormat("en-US", {
-			style: "currency",
-			currency: "USD", // Currency symbol will be parsed out
-		}).format(value).substring(1);
-	};
+	const currencyMask = createNumberMask(defaultMaskOptions);
 
 	// https://ant.design/components/input-number/#components-input-number-demo-formatter
 	// https://codesandbox.io/s/currency-wrapper-antd-input-3ynzo?file=/src/index.js
-	// This will be the display value that users will see.
 	const currencyParser = (value?: string): number => {
 
-		// if (value != null) {
-		// 	value = value.replace(/[^\d|.|,]/g, "");
-		// }
-
-		if (value != null && !IsValidAmount(value)) {
-			setShowValidation(true);
-			return defaultValue;
-		}
-
-		setShowValidation(false);
-
 		// For when the input gets cleared
-		if (value == null || !value.length) {
-			value = "0.0";
+		if (value == null || !value.length || value === "") {
+			value = "0.00";
 		}
 
 		// Detecting and parsing between comma and dot
@@ -85,36 +65,39 @@ const CurrencyInput: React.FC<ICurrencyInputProps> = (props: ICurrencyInputProps
 		return Number.isNaN(numberRep) ? 0 : numberRep;
 	};
 
-	const handleOnChange = (newAmount: number) => {
-		if (IsValidAmount(newAmount)) {
-			setShowValidation(false);
+	const currencyFormatter = (value?: number): string => {
+		if (value == null) {
+			value = 0;
+		}
 
-			if (onChange != null) {
-				onChange(newAmount);
-			}
-		} else {
-			setShowValidation(true);
+		// Assume that only en-US locale is supported
+		return new Intl.NumberFormat("en-US", {
+			style: "currency",
+			currency: "USD",
+		}).format(value);
+	};
+
+	const handleOnChange = (e: any) => {
+		if (onChange != null) {
+			onChange(currencyParser(e.target.value));
 		}
 	}
 
 	return (
-		<Row className="currency-input" align="middle">
+		  <Row className="currency-input" align="middle">
 			<Col span={4}>{currencySymbol}</Col>
 			<Col span={20}>
-				<Tooltip visible={showValidation && !readonly} placement="left" color="red" title="Please enter a lower amount.">
-					<InputNumber
-						defaultValue={defaultValue}
-						readOnly={readonly}
-						bordered={!readonly}
-						formatter={currencyFormatter}
-						parser={currencyParser}
-						onChange={_.debounce(handleOnChange, 1000)}
-						disabled={isLoading}
-					/>
-				</Tooltip>
+				<MaskedInput
+					defaultValue={currencyFormatter(defaultValue)}
+					className="ant-input-number" 
+					mask={currencyMask}
+					onChange={_.debounce(handleOnChange, 1000)}
+					disabled={isLoading}
+					readOnly={readonly}
+				/>
 			</Col>
-		</Row>
-	)
+	  </Row>
+	);
 }
 
 export default observer(CurrencyInput);
