@@ -66,16 +66,16 @@ const CurrencyInput: React.FC<ICurrencyInputProps> = (props: ICurrencyInputProps
 	};
 
 	const currencyFormatter = (value?: number): string => {
-		if (value == null) {
+		if (value == null || value < 0) {
 			value = 0;
 		}
 
 		// Assume that only en-US locale is supported
-		// USD currency symbol will be masked out
+		// Call to .substring is to parse out the currency symbol
 		return new Intl.NumberFormat("en-US", {
 			style: "currency",
 			currency: "USD",
-		}).format(value);
+		}).format(value).substring(1);
 	};
 
 	const handleOnChange = (e: any) => {
@@ -86,9 +86,10 @@ const CurrencyInput: React.FC<ICurrencyInputProps> = (props: ICurrencyInputProps
 
 	return (
 		  <Row className="currency-input" align="middle">
-			<Col span={4}>{currencySymbol}</Col>
+			<Col data-testid="currency-input-symbol" span={4}>{currencySymbol}</Col>
 			<Col span={20}>
 				<MaskedInput
+					data-testid="currency-input-amount"
 					value={currencyFormatter(amount)}
 					className="ant-input-number" 
 					mask={currencyMask}

@@ -6,7 +6,8 @@ import { observer } from "mobx-react";
 
 import Asset from "../../Models/Asset/Asset";
 import { AssetGroup, AssetGroupToString } from "../../Models/Asset/AssetGroup";
-import AssetLineItem from "../LineItem/AssetLineItem";
+import { useStores } from "../../Stores/StoreInitializer";
+import CurrencyInput from "../CurrencyInput/CurrencyInput";
 
 interface IAssetLineItemGroupProps {
 	assets: Asset[];
@@ -15,6 +16,8 @@ interface IAssetLineItemGroupProps {
 
 const AssetLineItemGroup: React.FC<IAssetLineItemGroupProps> = (props: IAssetLineItemGroupProps) => {
 	const { assets, group } = props;
+
+	const { balanceSheetStore } = useStores();
 
 	return (
 		<div className="line-item-group">
@@ -27,7 +30,19 @@ const AssetLineItemGroup: React.FC<IAssetLineItemGroupProps> = (props: IAssetLin
 			{
 				assets.map((lineItem: Asset) => {
 					return (
-						<AssetLineItem key={lineItem.id} model={lineItem} />
+						<Row key={lineItem.id} align="bottom">
+							<Col span={18}>
+								{lineItem.description}
+							</Col>
+							<Col span={6}>
+								<CurrencyInput 
+									currencySymbol={balanceSheetStore.balanceSheet.getCurrencySymbol} 
+									amount={lineItem.amount} 
+									onChange={(newAmount) => balanceSheetStore.updateAssetAmount(newAmount, lineItem.id)}
+									isLoading={balanceSheetStore.isLoading}
+								/>
+							</Col>
+						</Row>
 					);
 				})
 			}

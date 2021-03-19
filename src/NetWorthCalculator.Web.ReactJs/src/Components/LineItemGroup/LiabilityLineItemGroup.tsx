@@ -6,8 +6,9 @@ import { observer } from "mobx-react";
 
 import Liability from "../../Models/Liability/Liability";
 import { LiabilityGroup, LiabilityGroupToString } from "../../Models/Liability/LiabilityGroup";
-import LiabilityLineItem from "../LineItem/LiabilityLineItem";
+import { useStores } from "../../Stores/StoreInitializer";
 import { PaymentInterval, PaymentIntervalToString } from "../../Models/Liability/PaymentInterval";
+import CurrencyInput from "../CurrencyInput/CurrencyInput";
 
 interface ILiabilityLineItemGroupProps {
 	group: LiabilityGroup;
@@ -17,6 +18,8 @@ interface ILiabilityLineItemGroupProps {
 
 const LiabilityLineItemGroup: React.FC<ILiabilityLineItemGroupProps> = (props: ILiabilityLineItemGroupProps) => {
 	const { liabilities, group, paymentInterval } = props;
+
+	const { balanceSheetStore } = useStores();
 
 	return (
 		<div className="line-item-group">
@@ -31,7 +34,26 @@ const LiabilityLineItemGroup: React.FC<ILiabilityLineItemGroupProps> = (props: I
 			{
 				liabilities.map((lineItem: Liability) => {
 					return (
-						<LiabilityLineItem key={lineItem.id} model={lineItem} />
+						<Row key={lineItem.id} align="bottom" justify="space-between">
+							<Col span={10}>
+								{lineItem.description}
+							</Col>
+							<Col span={6}>
+								<CurrencyInput 
+									currencySymbol={balanceSheetStore.balanceSheet.getCurrencySymbol} 
+									amount={lineItem.intervalAmount} 
+									readonly
+								/>
+							</Col>
+							<Col className="amount-col" span={6}>
+								<CurrencyInput 
+									currencySymbol={balanceSheetStore.balanceSheet.getCurrencySymbol} 
+									amount={lineItem.amount} 
+									onChange={(newAmount) => balanceSheetStore.updateLiabilityAmount(newAmount, lineItem.id)} 
+									isLoading={balanceSheetStore.isLoading}
+								/>
+							</Col>
+						</Row>
 					);
 				})
 			}

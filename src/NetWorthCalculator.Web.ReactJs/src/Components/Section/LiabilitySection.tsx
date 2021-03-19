@@ -18,7 +18,7 @@ const LiabilitySection: React.FC<ILiabilitySectionProps> = (props: ILiabilitySec
 	const { balanceSheet } = props;
 
 	return (
-		<div className="section">
+		<div className="section" data-testid="liability-section">
 			<Row align="bottom">
 				<Col span={24}>
 					<b>Liabilities</b>

@@ -17,7 +17,7 @@ const AssetSection: React.FC<IAssetSectionProps> = (props: IAssetSectionProps) =
 	const { balanceSheet } = props;
 
 	return (
-		<div className="section">
+		<div className="section" data-testid="asset-section">
 			<Row align="bottom">
 				<Col span={24}>
 					<b>Assets</b>
