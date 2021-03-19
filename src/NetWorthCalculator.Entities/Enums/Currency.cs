@@ -8,7 +8,7 @@
 		JPY,
 		GBP,
 		AUD,
-		CNH,
+		CNY,
 		SEK,
 		NZD,
 		ZAR,

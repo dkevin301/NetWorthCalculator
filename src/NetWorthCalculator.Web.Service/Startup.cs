@@ -1,23 +1,21 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using NetWorthCalculator.Core.Repositories;
 using NetWorthCalculator.Core.BalanceSheets;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using NetWorthCalculator.Core.CurrencyRate;
+using NetWorthCalculator.Core.ExchangeRates;
+using NetWorthCalculator.Core.Repositories;
+using NetWorthCalculator.Web.Service.Exceptions;
 
 namespace NetWorthCalculator.Web.Service
 {
-    public class Startup
+	public class Startup
     {
+        private const string _defaultCorsPolicyName = "localhost";
+
+        private const string _corsOrigins = "http://localhost:3000";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -28,9 +26,21 @@ namespace NetWorthCalculator.Web.Service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers(options => options.Filters.Add(new HttpResponseExceptionFilter()));
 
-            services.AddHttpClient<ExchangeRatesService>();
+            // Configure CORS
+            services.AddCors(
+                options => options.AddPolicy(
+                    _defaultCorsPolicyName,
+                    builder => builder
+                        .WithOrigins(_corsOrigins)
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials()
+                )
+            );
+
+            services.AddHttpClient<IExchangeRatesService, ExchangeRatesService>();
 
             services.AddSingleton<IBalanceSheetRepository, BalanceSheetRepository>();
 
@@ -44,6 +54,8 @@ namespace NetWorthCalculator.Web.Service
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(_defaultCorsPolicyName);
 
             app.UseHttpsRedirection();
 

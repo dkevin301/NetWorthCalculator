@@ -201,9 +201,19 @@ namespace NetWorthCalculator.Core.Repositories
             };
         }
 
+        public string GetCurrencyAsString()
+		{
+            return this.BalanceSheet.Currency.ToString();
+		}
+
+        public BalanceSheet Get()
+		{
+            return this.BalanceSheet;
+		}
+
         public void Update(BalanceSheet target)
         {
-            // TODO
+            this.BalanceSheet = target;
         }
     }
 }

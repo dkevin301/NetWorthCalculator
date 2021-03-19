@@ -15,8 +15,8 @@ namespace NetWorthCalculator.Entities.Models
 
         public decimal TotalLiabilities { get; set; }
 
-        public ICollection<Asset> Assets { get; set; }
+        public List<Asset> Assets { get; set; }
 
-        public ICollection<Liability> Liabilities { get; set; }
+        public List<Liability> Liabilities { get; set; }
     }
 }
