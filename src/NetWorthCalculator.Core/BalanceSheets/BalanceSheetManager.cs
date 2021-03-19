@@ -23,6 +23,7 @@ namespace NetWorthCalculator.Core.BalanceSheets
             this.BalanceSheetRepository = balanceSheetRepository;
         }
 
+        /// <inheritdoc/>
         public async Task<BalanceSheet> UpdateCurrencyAsync(Currency targetCurrency)
 		{
             // Get the latest exchange rates
@@ -53,6 +54,7 @@ namespace NetWorthCalculator.Core.BalanceSheets
             return balanceSheet;
         }
 
+        /// <inheritdoc/>
         public BalanceSheet UpdateAssetAmount(int assetId, decimal newAmount, Currency currentCurrency)
 		{
             // Get the model and update the amounts and currency
@@ -60,12 +62,11 @@ namespace NetWorthCalculator.Core.BalanceSheets
 
             if (currentCurrency != balanceSheet.Currency)
 			{
-                throw new Exception("Found inconsistent currencies between service and client.");
+                throw new ArgumentException("Found inconsistent currencies between service and client.");
 			}
 
             // Get the Assets location and update it
-            var assets = balanceSheet.Assets.ToList();
-            var targetIndex = assets.FindIndex(a => a.Id == assetId);
+            var targetIndex = balanceSheet.Assets.FindIndex(a => a.Id == assetId);
 
             if (targetIndex == -1)
 			{
@@ -73,11 +74,10 @@ namespace NetWorthCalculator.Core.BalanceSheets
 			}
 
             // Update the value on the asset
-            assets[targetIndex].Amount = newAmount;
-            balanceSheet.Assets = assets;
+            balanceSheet.Assets[targetIndex].Amount = newAmount;
 
             // Update Asset and NW sums
-            balanceSheet.TotalAssets = assets.Sum(a => a.Amount);
+            balanceSheet.TotalAssets = balanceSheet.Assets.Sum(a => a.Amount);
             balanceSheet.NetWorth = balanceSheet.TotalAssets + balanceSheet.TotalLiabilities;
 
             // Save the model to the "database"
@@ -86,6 +86,7 @@ namespace NetWorthCalculator.Core.BalanceSheets
             return balanceSheet;
         }
 
+        /// <inheritdoc/>
         public BalanceSheet UpdateLiabilityAmount(int liabilityId, decimal newAmount, Currency currentCurrency)
         {
             // Get the model and update the amounts and currency
@@ -93,11 +94,11 @@ namespace NetWorthCalculator.Core.BalanceSheets
 
             if (currentCurrency != balanceSheet.Currency)
             {
-                throw new Exception("Found inconsistent currencies between service and client.");
+                throw new ArgumentException("Found inconsistent currencies between service and client.");
             }
 
             // Get the location of liability and update it
-            var liabilities = balanceSheet.Liabilities.ToList();
+            var liabilities = balanceSheet.Liabilities;
             var targetIndex = liabilities.FindIndex(a => a.Id == liabilityId);
 
             if (targetIndex == -1)

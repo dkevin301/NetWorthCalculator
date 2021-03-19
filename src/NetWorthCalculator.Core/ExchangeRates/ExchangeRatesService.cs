@@ -30,6 +30,7 @@ namespace NetWorthCalculator.Core.ExchangeRates
 			Client = client;
 		}
 
+		/// <inheritdoc />
 		public async Task<decimal> GetLatestExchangeRate(Currency targetCurrency)
 		{
 			try

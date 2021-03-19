@@ -1,13 +1,13 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
-using NetWorthCalculator.Core.BalanceSheets;
-using System.Collections.Generic;
-using NetWorthCalculator.Web.Service.Exceptions;
-using System.Net;
-using NetWorthCalculator.Web.Service.Controllers.BalanceSheet.Dto;
-using NetWorthCalculator.Entities.Enums;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Mvc;
 using NetWorthCalculator.Core;
+using NetWorthCalculator.Core.BalanceSheets;
+using NetWorthCalculator.Entities.Enums;
+using NetWorthCalculator.Web.Service.Controllers.BalanceSheet.Dto;
+using NetWorthCalculator.Web.Service.Exceptions;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace NetWorthCalculator.Web.Service.Controllers.BalanceSheet
 {
@@ -42,6 +42,7 @@ namespace NetWorthCalculator.Web.Service.Controllers.BalanceSheet
                 var updatedBalanceSheet = await this.BalanceSheetManager.UpdateCurrencyAsync(parsedCurrency);
 
                 // Convert to the DTO
+                // Ideally would use something like Automapper here
                 var assetDtos = new List<AssetDto>();
                 foreach (var asset in updatedBalanceSheet.Assets)
 				{
