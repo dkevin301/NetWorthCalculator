@@ -1,4 +1,5 @@
 import { observable } from "mobx";
+import { serializable } from "serializr";
 import { LiabilityGroup } from "./LiabilityGroup";
 import { PaymentInterval } from "./PaymentInterval";
 
@@ -13,21 +14,21 @@ interface ILiability {
 }
 
 export default class Liability {
-	@observable id!: number;
+	@serializable @observable id!: number;
 
-	@observable amount!: number;
+	@serializable @observable amount!: number;
 
-	@observable description!: string;
+	@serializable @observable description!: string;
 
-	@observable group!: LiabilityGroup;
+	@serializable @observable group!: LiabilityGroup;
 
-	@observable intervalAmount!: number;
+	@serializable @observable intervalAmount!: number;
 
-	@observable order!: number;
+	@serializable @observable order!: number;
 
-	@observable paymentInterval!: PaymentInterval;
+	@serializable @observable paymentInterval!: PaymentInterval;
 
 	constructor(values: ILiability) {
-		Object.assign(this, {...values});
+		Object.assign(this, { ...values });
 	}
 }

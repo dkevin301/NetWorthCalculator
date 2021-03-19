@@ -8,23 +8,25 @@ import Liability from "../Liability/Liability";
 import { LiabilityGroup } from "../Liability/LiabilityGroup";
 import { SortBy } from "../../Utils/Utils";
 import { Currency, CurrencyToSymbol } from "../Currency/Currency";
+import { list, object, serializable, update } from "serializr";
 import BalanceSheetDto from "../../Services/BalanceSheet/Dto/BalanceSheetDto";
-import { serializable, update } from "serializr";
+import AssetDto from "../../Services/BalanceSheet/Dto/AssetDto";
+import LiabilityDto from "../../Services/BalanceSheet/Dto/LiabilityDto";
 
 export default class BalanceSheet {
-	@observable id!: number;
+	@serializable @observable id!: number;
 
-	@observable assets!: Asset[];
+	@serializable(list(object(Asset))) @observable assets!: Asset[];
 
 	@serializable @observable currency!: Currency;
 
-	@observable liabilities!: Liability[];
+	@serializable(list(object(Liability))) @observable liabilities!: Liability[];
 
-	@observable netWorth!: number;
+	@serializable @observable netWorth!: number;
 
-	@observable totalAssets!: number;
+	@serializable @observable totalAssets!: number;
 
-	@observable totalLiabilities!: number;
+	@serializable @observable totalLiabilities!: number;
 
 	store: BalanceSheetStore;
 
@@ -47,5 +49,18 @@ export default class BalanceSheet {
 
 	@action updateFromJson(json: BalanceSheetDto) {
 		update(BalanceSheet, this, json);
+
+		// mobx cannot observe mutations in arrays - need to initialize a new one for it to pickup changes
+		if (json.assets != null) {
+			this.assets = json.assets.map((x: AssetDto) => {
+				return new Asset({ ...x });
+			})
+		}
+
+		if (json.liabilities != null) {
+			this.liabilities = json.liabilities.map((x: LiabilityDto) => {
+				return new Liability({ ...x });
+			})
+		}
 	}
 }

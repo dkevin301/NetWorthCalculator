@@ -1,18 +1,26 @@
 import http from "../HttpService";
-import UpdateAssetRequest from "./Dto/UpdateAssetRequest";
+import UpdateAssetAmountRequest from "./Dto/UpdateAssetAmountRequest";
 import UpdateCurrencyRequest from "./Dto/UpdateCurrencyRequest";
-import UpdateLiabilityRequest from "./Dto/UpdateLiabilityRequest";
+import BalanceSheetDto from "./Dto/BalanceSheetDto";
+import UpdateLiabilityAmountRequest from "./Dto/UpdateLiabilityAmountRequest";
+import UpdateAssetAmountResponse from "./Dto/UpdateAssetAmountResponse";
+import UpdateLiabilityAmountResponse from "./Dto/UpdateLiabilityAmountResponse";
 
 export default class BalanceSheetService {
-	async updateCurrency(request: UpdateCurrencyRequest): Promise<any> {
-		return await http.put("api/profile/UpdateCurrency", request);
+	baseUrl: string = "api/balancesheet/";
+
+	async updateCurrency(request: UpdateCurrencyRequest): Promise<BalanceSheetDto> {
+		const result = await http.put(`${this.baseUrl}updatecurrency`, request);
+		return result.data;
 	}
 
-	async updateAsset(request: UpdateAssetRequest): Promise<number> {
-		return await http.put("api/profile/UpdateAsset", request);
+	async updateAsset(request: UpdateAssetAmountRequest): Promise<UpdateAssetAmountResponse> {
+		const result = await http.put(`${this.baseUrl}updateassetamount`, request);
+		return result.data;
 	}
 
-	async updateLiability(request: UpdateLiabilityRequest): Promise<number> {
-		return await http.put("api/profile/UpdateLiability", request);
+	async updateLiability(request: UpdateLiabilityAmountRequest): Promise<UpdateLiabilityAmountResponse> {
+		const result = await http.put(`${this.baseUrl}updateliabilityamount`, request);
+		return result.data;
 	}
 }

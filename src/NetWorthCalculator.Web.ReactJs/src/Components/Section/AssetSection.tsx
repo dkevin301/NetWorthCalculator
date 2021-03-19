@@ -38,7 +38,7 @@ const AssetSection: React.FC<IAssetSectionProps> = (props: IAssetSectionProps) =
 				<Col span={6}>
 					<CurrencyInput 
 						currencySymbol={balanceSheet.getCurrencySymbol} 
-						defaultValue={balanceSheet.totalAssets}
+						amount={balanceSheet.totalAssets}
 						readonly
 					/>
 				</Col>

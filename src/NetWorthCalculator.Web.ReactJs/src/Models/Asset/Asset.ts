@@ -1,4 +1,5 @@
 import { observable } from "mobx";
+import { serializable } from "serializr";
 import { AssetGroup } from "./AssetGroup";
 
 interface IAsset {
@@ -11,15 +12,15 @@ interface IAsset {
 
 export default class Asset {
 
-	@observable id!: number;
+	@serializable @observable id!: number;
 
-	@observable amount!: number;
+	@serializable @observable amount!: number;
 
-	@observable group!: AssetGroup;
+	@serializable @observable group!: AssetGroup;
 
-	@observable description!: string;
+	@serializable @observable description!: string;
 
-	@observable order!: number;
+	@serializable @observable order!: number;
 
 	constructor(values: IAsset) {
 		Object.assign(this, {...values});

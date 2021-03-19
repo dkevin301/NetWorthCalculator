@@ -24,10 +24,9 @@ const LiabilityLineItemGroup: React.FC<ILiabilityLineItemGroupProps> = (props: I
 				<Col span={12}>
 					<b>{LiabilityGroupToString(group)}</b>
 				</Col>
-				<Col span={6}>
+				<Col span={12}>
 					<b>{PaymentIntervalToString(paymentInterval)}</b>
 				</Col>
-				<Col span={6} />
 			</Row>
 			{
 				liabilities.map((lineItem: Liability) => {

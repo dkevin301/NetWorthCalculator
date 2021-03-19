@@ -41,7 +41,7 @@ const LiabilitySection: React.FC<ILiabilitySectionProps> = (props: ILiabilitySec
 				<Col span={6}>
 					<CurrencyInput 
 						currencySymbol={balanceSheet.getCurrencySymbol} 
-						defaultValue={balanceSheet.totalLiabilities}
+						amount={balanceSheet.totalLiabilities}
 						readonly
 					/>
 				</Col>

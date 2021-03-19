@@ -7,7 +7,9 @@ import Liability from "../Models/Liability/Liability";
 import { LiabilityGroup } from "../Models/Liability/LiabilityGroup";
 import { PaymentInterval } from "../Models/Liability/PaymentInterval";
 import BalanceSheetService from "../Services/BalanceSheet/BalanceSheetService";
-import BalanceSheetDto from "../Services/BalanceSheet/Dto/BalanceSheetDto";
+import UpdateAssetAmountRequest from "../Services/BalanceSheet/Dto/UpdateAssetAmountRequest";
+import UpdateCurrencyRequest from "../Services/BalanceSheet/Dto/UpdateCurrencyRequest";
+import UpdateLiabilityAmountRequest from "../Services/BalanceSheet/Dto/UpdateLiabilityAmountRequest";
 import RootStore from "./StoreInitializer";
 
 export default class BalanceSheetStore {
@@ -19,60 +21,80 @@ export default class BalanceSheetStore {
 
 	rootStore: RootStore;
 
-	balanceSheetService: BalanceSheetService;
+	service: BalanceSheetService;
 
-	constructor(rootStore: RootStore, balanceSheetService: BalanceSheetService) {
+	constructor(rootStore: RootStore, service: BalanceSheetService) {
 		this.rootStore = rootStore;
-		this.balanceSheetService = balanceSheetService;
+		this.service = service;
 
 		this.initializeDefaultBalanceSheet();
 	}
 
-	@action updateCurrency(id: number, newCurrency: Currency) {
-		// TODO
+	@action async updateCurrency(newCurrency: Currency) {
 		this.isLoading = true;
-		console.log(`Serialize and call service with ${id} and ${newCurrency}`);
 
-		setTimeout(() => {
-			const mock = new BalanceSheetDto();
-			mock.currency = newCurrency;
-			this.update(mock);
+		try {
+			const json = await this.service.updateCurrency({ targetCurrency: Currency[newCurrency] } as UpdateCurrencyRequest);
+			this.balanceSheet.updateFromJson(json);
+		} catch (e) {
+			console.dir(e);
+		} finally {
 			this.isLoading = false;
-		}, 1000)
+		}
 	}
 
-	@action updateAssetAmount(amount: number, assetId: number) {
-		// TODO
+	@action async updateAssetAmount(amount: number, assetId: number) {
 		this.isLoading = true;
-		console.log(`Serialize and call service with ${assetId} ${amount}`);
+		
+		const request = {
+			assetId: assetId,
+			newAmount: amount,
+			currency: Currency[this.balanceSheet.currency]
+		} as UpdateAssetAmountRequest
 
-		// Mimic call to backend
-		// Note to self: mobx CANNOT pickup changes on mutable element in a collection. Array must be modified as a whole.
-		setTimeout(() => {
-			let indexOfLocation = this.balanceSheet.assets.map(l => l.id).indexOf(assetId);
+		try {
+			const json = await this.service.updateAsset(request);
+
+			this.balanceSheet.totalAssets = json.newAssetTotal;
+			this.balanceSheet.netWorth = json.newNetWorth;
+
+			// mobx cannot pickup mutations in arrays - need to initialize a new one for it to pickup changes
+			let indexOfLocation = this.balanceSheet.assets.map(l => l.id).indexOf(json.assetId);
 			let arrayCopy: Asset[] = Object.assign([], this.balanceSheet.assets);
-			arrayCopy[indexOfLocation].amount = amount;
+			arrayCopy[indexOfLocation].amount = json.newAmount;
+
+		} catch (e) {
+			console.dir(e);
+		} finally {
 			this.isLoading = false;
-		}, 1000)
+		}
 	}
 
-	@action updateLiabilityAmount(amount: number, liabilityId: number) {
-		// TODO
+	@action async updateLiabilityAmount(amount: number, liabilityId: number) {
 		this.isLoading = true;
-		console.log(`Serialize and call service with ${liabilityId} ${amount}`);
 
-		// Mimic call to backend
-		// Note to self: mobx CANNOT pickup changes on mutable element in a collection. Array must be modified as a whole.
-		setTimeout(() => {
-			let indexOfLocation = this.balanceSheet.assets.map(l => l.id).indexOf(liabilityId);
-			let arrayCopy: Liability[] = Object.assign([], this.balanceSheet.liabilities);
-			arrayCopy[indexOfLocation].amount = amount;
+		const request = {
+			liabilityId: liabilityId,
+			newAmount: amount,
+			currency: Currency[this.balanceSheet.currency]
+		} as UpdateLiabilityAmountRequest
+
+		try {
+			const json = await this.service.updateLiability(request);
+
+			this.balanceSheet.totalLiabilities = json.newLiabilityTotal;
+			this.balanceSheet.netWorth = json.newNetWorth;
+
+			// mobx cannot pickup mutations in arrays - need to initialize a new one for it to pickup changes
+			let indexOfLocation = this.balanceSheet.liabilities.map(l => l.id).indexOf(json.liabilityId);
+			let arrayCopy: Asset[] = Object.assign([], this.balanceSheet.liabilities);
+			arrayCopy[indexOfLocation].amount = json.newAmount;
+
+		} catch (e) {
+			console.dir(e);
+		} finally {
 			this.isLoading = false;
-		}, 1000)
-	}
-
-	@action update(json: BalanceSheetDto) {
-		this.balanceSheet.updateFromJson(json);
+		}
 	}
 
 	initializeDefaultBalanceSheet = () => {

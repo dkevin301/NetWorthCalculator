@@ -27,7 +27,7 @@ const AssetLineItemGroup: React.FC<IAssetLineItemGroupProps> = (props: IAssetLin
 			{
 				assets.map((lineItem: Asset) => {
 					return (
-						<AssetLineItem key={lineItem.id + 1} model={lineItem} />
+						<AssetLineItem key={lineItem.id} model={lineItem} />
 					);
 				})
 			}

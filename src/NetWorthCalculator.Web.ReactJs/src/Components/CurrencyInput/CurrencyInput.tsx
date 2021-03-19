@@ -22,14 +22,14 @@ const defaultMaskOptions = {
 
 interface ICurrencyInputProps {
 	currencySymbol: string;
-	defaultValue: number;
+	amount: number;
 	readonly?: boolean;
 	isLoading?: boolean;
 	onChange?: (newAmount: number) => void;
 }
 
 const CurrencyInput: React.FC<ICurrencyInputProps> = (props: ICurrencyInputProps) => {
-	const { currencySymbol, defaultValue, readonly, isLoading, onChange } = props;
+	const { currencySymbol, amount, readonly, isLoading, onChange } = props;
 
 	const currencyMask = createNumberMask(defaultMaskOptions);
 
@@ -71,6 +71,7 @@ const CurrencyInput: React.FC<ICurrencyInputProps> = (props: ICurrencyInputProps
 		}
 
 		// Assume that only en-US locale is supported
+		// USD currency symbol will be masked out
 		return new Intl.NumberFormat("en-US", {
 			style: "currency",
 			currency: "USD",
@@ -88,7 +89,7 @@ const CurrencyInput: React.FC<ICurrencyInputProps> = (props: ICurrencyInputProps
 			<Col span={4}>{currencySymbol}</Col>
 			<Col span={20}>
 				<MaskedInput
-					defaultValue={currencyFormatter(defaultValue)}
+					value={currencyFormatter(amount)}
 					className="ant-input-number" 
 					mask={currencyMask}
 					onChange={_.debounce(handleOnChange, 1000)}

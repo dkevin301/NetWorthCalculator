@@ -20,22 +20,21 @@ const LiabilityLineItem: React.FC<ILiabilityLineItemProps> = (props: ILiabilityL
 	}
 
 	return (
-		<Row align="bottom">
-			<Col span={12}>
+		<Row align="bottom" justify="space-between">
+			<Col span={10}>
 				{model.description}
 			</Col>
 			<Col span={6}>
 				<CurrencyInput 
 					currencySymbol={balanceSheetStore.balanceSheet.getCurrencySymbol} 
-					defaultValue={model.intervalAmount} 
-					onChange={handleOnChange}
+					amount={model.intervalAmount} 
 					readonly
 				/>
 			</Col>
 			<Col className="amount-col" span={6}>
 				<CurrencyInput 
 					currencySymbol={balanceSheetStore.balanceSheet.getCurrencySymbol} 
-					defaultValue={model.amount} 
+					amount={model.amount} 
 					onChange={handleOnChange} 
 					isLoading={balanceSheetStore.isLoading}
 				/>

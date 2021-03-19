@@ -32,13 +32,13 @@ const NetWorthCalculator: React.FC = () => {
 	}
 
 	const handleCurrencyChange = (e: number) => {
-		balanceSheetStore.updateCurrency(currentBalanceSheet.id, e);
+		balanceSheetStore.updateCurrency(e);
 	}
 
 	return (
 		<div className="net-worth-calculator">
 			<h1>Tracking Your Net Worth</h1>
-			<Row justify="end" align="middle" gutter={10}>
+			<Row justify="end" align="middle">
 				<Col>
 					<b>Select Currency:</b>
 				</Col>
@@ -62,7 +62,7 @@ const NetWorthCalculator: React.FC = () => {
 				<Col span={6}>
 					<CurrencyInput 
 						currencySymbol={currentBalanceSheet.getCurrencySymbol} 
-						defaultValue={currentBalanceSheet.netWorth}
+						amount={currentBalanceSheet.netWorth}
 						readonly
 					/>
 				</Col>
