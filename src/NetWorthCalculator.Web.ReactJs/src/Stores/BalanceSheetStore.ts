@@ -37,7 +37,7 @@ export default class BalanceSheetStore {
 			const json = await this.service.updateCurrency({ targetCurrency: Currency[newCurrency] } as UpdateCurrencyRequest);
 			this.balanceSheet.updateFromJson(json);
 		} catch (e) {
-			console.dir(e);
+			throw e;
 		} finally {
 			this.isLoading = false;
 		}

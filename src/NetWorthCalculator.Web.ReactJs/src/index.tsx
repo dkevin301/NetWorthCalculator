@@ -8,6 +8,10 @@ import reportWebVitals from './reportWebVitals';
 
 const stores = new InitializeStores();
 
+/**
+ * Render the main <App /> component with the StoreContext wrapped around it.
+ * This will allow us to reference the same store instance through the application.
+ */
 ReactDOM.render(
 	<React.StrictMode>
 		<StoresContext.Provider value={{ ...stores }}>
