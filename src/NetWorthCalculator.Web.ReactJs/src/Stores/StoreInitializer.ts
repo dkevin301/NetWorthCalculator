@@ -2,6 +2,10 @@ import React from "react";
 import BalanceSheetService from "../Services/BalanceSheet/BalanceSheetService";
 import BalanceSheetStore from "./BalanceSheetStore";
 
+/**
+ * Initialize the RootStore and put it into a React Context.
+ * Multiple stores can be defined in here as more entities are added.
+ */
 export default class RootStore {
 	balanceSheetStore: BalanceSheetStore;
 
