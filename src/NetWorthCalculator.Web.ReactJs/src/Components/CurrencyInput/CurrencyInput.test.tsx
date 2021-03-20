@@ -18,6 +18,10 @@ describe("CurrencyInput", () => {
 
 	/**
 	 * Tests that the inputted amount (as a number) is properly represented in its string format
+	 * 
+	 * The max allowed amount is 1 Trillion, but the test case still returns a properly formatted string,
+	 * when it should be an empty string. This may be because the input mask isn't being applied correctly
+	 * in the test- will need to do investigation.
 	 */
 	it.each([
 		[-1, "0.00"],
@@ -27,7 +31,7 @@ describe("CurrencyInput", () => {
 		[1234, "1,234.00"],
 		[123456789.11, "123,456,789.11"],
 		[999999999999.99, "999,999,999,999.99"],
-		// [1000000000000, ""], // Max allowed amount is 1 Trillion. This condition will fail because the masking isn't being applied.
+		// [1000000000000, ""], 
 	])(`displays properly formatted amount of %f, as %s`, async (amount: number, expected: string) => {
 		// Arrange
 		// Act
